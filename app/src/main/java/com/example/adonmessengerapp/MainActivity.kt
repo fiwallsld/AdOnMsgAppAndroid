@@ -26,8 +26,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val serviceIntent = Intent(this, MyUsageService::class.java)
-        startService(serviceIntent)
+        // startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+
+         val serviceIntent = Intent(this, MyUsageService::class.java)
+         startService(serviceIntent)
 
         videoView = findViewById(R.id.videoView)
         btnCheck = findViewById(R.id.btnCheck)
@@ -37,18 +39,9 @@ class MainActivity : AppCompatActivity() {
         mediaController.setAnchorView(videoView)
         val videoUri: Uri = Uri.parse("https://www.w3schools.com/html/mov_bbb.mp4")
 
-
-        try {
-            val inputStream = contentResolver.openInputStream(videoUri)
-
-            // Thực hiện thao tác đọc file tại đây
             videoView.setMediaController(mediaController)
             videoView.setVideoURI(videoUri)
             videoView.start()
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-            // Xử lý lỗi tại đây
-        }        
 
         btnCheck.setOnClickListener {
             if (checkUsageAccessPermission()) {
@@ -77,5 +70,6 @@ class MainActivity : AppCompatActivity() {
         )
         return mode == AppOpsManager.MODE_ALLOWED
     }
+
 
 }
